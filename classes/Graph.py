@@ -2,7 +2,7 @@
 """
 Created on Mon Jan 20 15:18:54 2020
 
-@author: utente
+@author: mloca
 """
 try:
 # Non-existent module
@@ -17,9 +17,17 @@ except ImportError:
 class Graph:
     import networkx as nx
     
-    def __init__(self, name, n):
+    def __init__(self, name, n,**Optional):
         self.name=name
         self.nodeList=n
+        if ('DAG' in Optional):
+            self.defDag(Optional['DAG'])       
+        if (('pos' in Optional) 
+            and (isinstance(Optional['pos'], dict)) 
+            and (len(Optional['pos'])== len(n))):
+            self.pos=Optional['pos']
+        else:
+            self.pos=[]
 
     def descendant(self, X):
         nodeToExplore=X
@@ -98,53 +106,17 @@ class Graph:
             else:
                 validPath.append(p)
         return validPath
-              
-    #def allValidPath(self, start, end)
+
     
     def checkCollider(self,A, B, C):
         if ((B in A.nodeout) and (B in C.nodeout)):
             return True
         return False
 
+    def defDag(self, G):
+        for x in self.nodeList:
+            x.set_nodeout(G[x])
+            for y in G[x]:
+                y.set_nodein(list(set(y.nodein)|set([x])))
         
-#    def algorithmOne(self, J, F):
-#        S=Node('s')
-#        H=self.nodeList
-#        for j in J:
-#            S.nodeout.append(j)
-#            j.nodein.append(S)
-#        self.nodeList.append(S)
-#        matrixtmp=[]
-#        #si potrebbe fare che le riga e la colonna 0 siano i nomi dei nodi
-#        for i in range(len(self.nodeList)):
-#            tmp=[]
-#            for j in range(len(self.nodeList)):
-#                tmp.append(0)
-#            matrixtmp.append(tmp)
-#            
-#        #costruisco la matrice d'adiacenza
-#        matrixAdj=[]
-#        i=0
-#        for x in self.nodeList:
-#            j=0
-#            tmp=[]
-#            for y in self.nodeList:
-#                if (y in x.nodeout):
-#                    tmp.append(j)
-#                j=j+1
-#            i=i+1
-#            matrixAdj.append(tmp)
-#        i=0
-#        s_position=len(matrixtmp)-1
-#        for x in self.nodeList:
-#            print(x.name)
-#            if (x in J):
-#                matrixtmp[i][s_position]=1
-#                matrixtmp[s_position][i]=1
-#            i=i+1
-#        #cerco di fare la parte 3 dell'algoritmo
-#        len_matrix=len(matrixtmp)
-#         for i in range(len_matrix):
-#             for j in range(len_matrix):                    
-#                 if (matrixtmp[i][j]==1):
-#                     for k in matrixAdj
+#
