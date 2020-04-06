@@ -2,7 +2,7 @@
 """
 Created on Fri Mar 13 10:32:05 2020
 
-@author: utente
+@author: mloca
 """
 try:
 # Non-existent module
@@ -26,7 +26,8 @@ def reachable(G, X, Z, **OptionalPlot):
     
     if (('Plot' in OptionalPlot) 
         and(OptionalPlot['Plot'])==True):
-        plot.plotRGBColor(G, R, Z)
+        plot.plotRGBColor(G, R, Z, ["Reachable", "Not reachable", "Observed"],
+                          "Reachable Graph of "+ X.name)
     
     return R
     

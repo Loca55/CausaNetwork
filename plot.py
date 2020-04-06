@@ -20,10 +20,10 @@ def plotGraph(G):
         
     edge=[]
     i=0
-    tmp=[]
+    label={}
     value=0
     for x in G.nodeList:
-        
+        label[x.name]=x.name
         Gplot.add_node(x.name)
         for y in x.nodeout:
             tupla=()
@@ -31,10 +31,22 @@ def plotGraph(G):
             edge.append(tupla)
         i=i+1
     
+    if not(G.pos==[]):
+        position=G.pos
+    else:
+        position=nx.spring_layout(Gplot)
     #Gplot=nx.relabel_nodes(Gplot,mapping )
     Gplot.add_edges_from(edge)
-    nx.draw(Gplot, with_labels=True)
-    plt.savefig("simple_path.png") # save as png
+    nx.draw_networkx_nodes(Gplot,
+                           position,
+                           nodelist=Gplot.nodes(),
+                           node_color='b',
+                           node_size=520,
+                           alpha=0.8)
+    nx.draw_networkx_labels(Gplot,position,label,font_size=12)
+    nx.draw_networkx_edges(Gplot,position,width=1.0,alpha=0.5)
+    #plt.savefig("simple_path.png") # save as png
+    plt.title('Graph')
     plt.show()
 
 def allPathPlot(G, X, Y):   
@@ -44,6 +56,8 @@ def allPathPlot(G, X, Y):
     for p in validPath:
         Gtmp=graph('Gtmp', p)
         Gplot=nx.DiGraph()
+        for x in p:
+            Gplot.add_node(x.name, pos=G.pos[x.name])
         #plotGraph(Gtmp)
         i=0
         edge=[]
@@ -54,12 +68,32 @@ def allPathPlot(G, X, Y):
                 edge.append((p[i].name, p[i+1].name))
             i=i+1
         Gplot.add_edges_from(edge)
-        nx.draw(Gplot, with_labels=True)
+        
+        pos=nx.get_node_attributes(Gplot,'pos')
+        nx.draw(Gplot,pos, with_labels=True)
         #plt.savefig("simple_path.png") # save as png
         plt.show()
         
-def plotRGBColor(G, R, Gr):
+def plotRGBColor(G, R, Gr, Label, Title):
+    '''
     
+
+    Parameters
+    ----------
+    G : Graph
+        Graph that we want to represent.
+    R : List
+        List of node that have particular trait (like are reachable or are part of directpath).
+    Gr : List
+        List of node of node observed
+    Label : List
+        List of label for red, blue and green node.
+
+    Returns
+    -------
+    Plot a graph with three node color
+
+    '''
     
     
     Gplot= nx.DiGraph()
@@ -108,22 +142,22 @@ def plotRGBColor(G, R, Gr):
                            node_color='r',
                            node_size=520,
                            alpha=0.8,
-                           label='Reachable')
+                           label=Label[0])
     nx.draw_networkx_nodes(Gplot,pos,
                            nodelist=Blue,
                            node_color='b',
                            node_size=520,
                            alpha=0.8,
-                           label='Not reachable')
+                           label=Label[1])
     nx.draw_networkx_nodes(Gplot,pos,
                            nodelist=Green,
                            node_color='G',
                            node_size=520,
                            alpha=0.8,
-                           label='Observed')
+                           label=Label[2])
     
     nx.draw_networkx_labels(Gplot,pos,labels,font_size=12)
     nx.draw_networkx_edges(Gplot,pos,width=1.0,alpha=0.5)
     plt.legend(numpoints = 1)
-    plt.savefig("simple_path.png") # save as png
+    plt.title(Title)
     plt.show()

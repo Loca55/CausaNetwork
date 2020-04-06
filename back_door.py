@@ -2,7 +2,7 @@
 """
 Created on Fri Jan 17 15:37:40 2020
 
-@author: utente
+@author: mloca
 """
 try:
 # Non-existent module
@@ -20,20 +20,12 @@ except ImportError:
 #y identifica il nodo effetto
 #x identifica il nodo causa
 #x,y,z(appartengono)G
-#la funzione verifica se esiste un percorso non bloccato tra x e y
-#un percorso si definisce bloccato se si verifica una delle seguenti condizioni:
-#   1)il percorso contiente una catena o una fork e il nodo centrale della
-#   catena o della fork fa parte di z
-#   2) il percorso contiente un collider e il nodo centrale del collider non fa
-#   parte di 
-#ritorna 1 se il percorso non è bloccato 
-#ritorna 0 se il percorso è bloccato
+
 def backdoor(G, X, Z, Y, **OptionalPlot):
     PlotBackDoor=False
     if (('Plot' in OptionalPlot) 
         and(OptionalPlot['Plot'])==True):
         PlotBackDoor=True
-        plot.allPathPlot(G, X, Y)
         
     D = G.descendant([X])
     tmp=X.nodeout
@@ -56,11 +48,11 @@ def backdoor(G, X, Z, Y, **OptionalPlot):
         if z in D:
             desc=False
     
-    if (PlotBackDoor):
-        direct=G.BFS(X,Y)
-        for d in direct:  
-            R=list(set(R)|set(d))
-        plot.plotRGBColor(G,R , Z)
+    # if (PlotBackDoor):
+    #     direct=G.BFS(X,Y)
+    #     for d in direct:  
+    #         R=list(set(R)|set(d))
+    #     plot.plotRGBColor(G,R , Z)
     
     result= reachable and desc
     return result

@@ -2,7 +2,7 @@
 """
 Created on Wed Mar 18 12:12:57 2020
 
-@author: utente
+@author: mloca
 """
 
 try:
@@ -48,7 +48,8 @@ def frontdoor(G, X, Z, Y, **Optional_Parameter):
     u=[]
     for p in direct_path:
         if(PlotAll):
-            plot.plotRGBColor(G, p, Z)
+            plot.plotRGBColor(G, p, Z, ["Direct Path", "Other", "Z"],
+                              "Direct Path")
         flag=1
         for z in Z:
             if (z in p):
@@ -65,7 +66,7 @@ def frontdoor(G, X, Z, Y, **Optional_Parameter):
         #R = back_door.backdoor(G, X, [], z)
         if (PlotBackDoor or PlotAll):
             R = back_door.backdoor(G, X, [], z, Plot=True)
-            plot.allPathPlot(G, X, Z)
+            #plot.allPathPlot(G, X, Z)
         else:
              R = back_door.backdoor(G, X, [], z, Plot=False)
             #plot.plotRGBColor(G, R, [])
@@ -79,7 +80,10 @@ def frontdoor(G, X, Z, Y, **Optional_Parameter):
     #All back-door paths from Z to Y are blocked by X
     flag=True
     for z in Z:
-        bk=back_door.backdoor(G, z, [X], Y, Plot=True)
+        if (PlotBackDoor or PlotAll):
+            bk=back_door.backdoor(G, z, [X], Y, Plot=True)
+        else:
+            bk=back_door.backdoor(G, z, [X], Y, Plot=False)
         flag= flag and bk
     
     if not(flag):
@@ -87,6 +91,3 @@ def frontdoor(G, X, Z, Y, **Optional_Parameter):
     
     return True
     
-#    unblocked_directed_paths = [
-#            path for path in direct_path if not any(zz in path for zz in Z)
-#        ]
