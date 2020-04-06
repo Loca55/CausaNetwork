@@ -1,0 +1,172 @@
+1.	Node
+2.	Graph
+3.	D-separated
+4.	Backdoor
+5.	Frontdoor
+6.	Plot
+
+NODE
+Attributi:
+•	name stringa, nome del nodo.
+•	nodeout lista di nodi collegati con archi uscenti dal nodo preso in considerazione
+•	nodein lista di nodi collegati con archi entranti dal nodo preso in considerazione
+
+__init__
+Inizializziamo la classe node.
+Nodeout e nodein sono inizializzati come lista vuota.
+Parametri
+	self  nodo preso in considerazione
+	name nome del nodo
+	
+set_nodein
+Setta l’attributo nodein con il valore in input
+Parametri
+	self  nodo preso in considerazione
+	nodein lista di nodi collegati con archi entranti dal nodo preso in considerazione
+	
+set_nodeout
+Setta l’attributo nodeout con il valore in input
+Parametri
+	self  nodo preso in considerazione
+  nodeout lista di nodi collegati con archi uscenti dal nodo preso in considerazione
+
+
+GRAPH
+Attributi:
+•	name stringa, nome del Grafo.
+•	nodeList lista di nodi appartenenti al grafo
+•	Pos(opzionale) dict dove vengono definite la posizione all’interno del grafo dei vari nodi.
+
+__init__
+Inizializziamo la classe graph.
+Parametri
+•	name stringa, nome del Grafo.
+•	nodeList lista di nodi appartenenti al grafo
+•	DAG(opzionale) dict dal quale vengono definiti i nodein e i nodeout dei vari nodi; per ogni nodo nel dict corrisponde una lista di “nodeout”.
+•	Pos(opzionale) dict dove vengono definite la posizione all’interno del grafo dei vari nodi.
+
+defDag
+Definisce tutti i nodein e i nodeout partendo dal DAG preso nell’inizializzazione del grafo
+Parametri
+•	self grafo preso in considerazione
+•	DAG dict dal quale vengono definiti i nodein e i nodeout dei vari nodi; per ogni nodo nel dict corrisponde una lista di “nodeout”.
+
+descendant
+Definisce tutti i discendenti di una lista di nodi presi in considerazione
+Parametri
+	self  grafo preso in considerazione
+	X lista di nodi dal quale partire
+Output
+	Descendant lista di nodi discendenti
+
+ancestor
+Definisce tutti gli antenati di una lista di nodi presi in considerazione
+Parametri
+	self  grafo preso in considerazione
+	Z lista di nodi dal quale partire
+Output
+	ancestor lista di nodi antenati
+
+BFS
+Definisce tutti i percorsi diretti tra due nodi
+Parametri
+	self  grafo preso in considerazione
+	start nodo dal quale iniziare a cercare i percorsi diretti
+	end nodo finale
+Output
+	directPath lista di liste,ogni lista contiene nodi che definisco un percorso diretto tra start e end
+
+allPath
+Definisce tutti i percorsi tra due nodi esclusi i percorsi che contengono un collider
+Parametri
+	self  grafo preso in considerazione
+	start nodo dal quale iniziare a cercare i percorsi diretti
+	end nodo finale
+Output
+	validPath lista di liste,ogni lista contiene nodi che definisco un percorso tra start e end
+
+checkCollider
+Definisce se tre nodi sono un collider o meno.
+Parametri
+	self  grafo preso in considerazione
+	A nodo parent1
+	B nodo centrale
+  C nodo parent 2
+Output
+	True/False
+
+DSEP
+
+Reachable
+Definisce tutti i nodi raggiungibili da un nodo di partenza con una lista di nodi condizionanti
+Parametri
+	G DAG in questione.
+	X nodo sorgente dal quale analizzare quali nodi sono raggiungibili da esso.
+	Z lista di nodi condizionanti
+	Plot=True/False  indica se si vuole stampare a video il grafico dei nodi raggiungibili o meno
+Output
+	R lista di nodi raggiungibili da X considerando la lista di nodi condizionanti Z
+
+BACK_DOOR
+
+backdoor
+Definisce se ci sono o meno percorsi backdoor tra due nodi
+Parametri
+	G DAG in questione.
+	X nodo causa dal quale analizzare i possibili percorsi di backdoor.
+	Z lista di nodi condizionanti.
+	Y nodo effetto.
+	Plot=True/False indica se si vuole stampare o meno a video i grafici di tutti i percorsi backdoor(indipendentemente dal condizionamento) e i nodi raggiungibili secondo le regole di backdoor.
+Output
+	True se non vi è alcun percorso di backdoor.
+	False Se vi è almeno un percorso che Z non blocca.
+
+backdoor2
+Definisce tutti i nodi condizionanti che bloccano tutti i percorsi backdoor tra due nodi
+Parametri
+	G DAG in questione.
+	X nodo causa dal quale analizzare i possibili percorsi di backdoor.
+	Y nodo effetto.
+Output
+	R restituisce la lista di nodi che bloccano tutti i percorsi di backdoor tra X e Y.
+
+FRONT_DOOR
+
+frontdoor
+Definisce se ci sono percorsi frontdoor tra due nodi condizionati da una lista di nodi 
+Parametri
+	G DAG in questione.
+	X nodo causa dal quale analizzare i possibili frontdoor.
+	Z lista di nodi condizionanti.
+	Y nodo effetto.
+	PlotAll=True/False indica se si vuole stampare o meno a video i grafici di tutti i percorsi backdoor e tutti i percorsi diretti tra X e Y (che dovrebbero essere intercettati da Z)
+	PlotBackDoor=True/False indica se si vuole stampare a video i grafici dei percorsi backdoor
+Output
+	True se vi è almeno un percorso di frontdoor.
+	False Se non vi è alcun un percorso che Z non blocca.
+
+PLOT
+
+plotGraph
+Plotta il grafo preso in input
+Parametri
+	G grafo da plottare.
+	
+allPathplot
+Plotta tutti i percorsi tra due nodi.
+Parametri
+	G grafo da plottare.
+	X nodo di partenza
+	Y nodo di fine.
+	
+plotRGBColor
+plotta il grafo con nodi di tre colori diversi (red, green , blue)
+Parametri
+	G grafo da plottare.
+	R nodi plottati in rosso.
+	Gr nodi plottati in green(I restanti sono blu).
+	Label:
+    o	Label[0]:  definisce la label dei nodi rossi
+    o	Label[1]:  definisce la label dei nodi verdi
+    o	Label[2]:  definisce la label dei nodi blu
+	Title  titolo del grafo
