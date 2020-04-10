@@ -105,7 +105,7 @@ def reachablePhaseTwo(G, X, Z, A):
                     # I percorsi della v-structure sono attivi
                     for y in Y.nodein:
                         #I genitori di Y saranno visitati dal basso
-                        L = list(set(L) | set([(y,1)]))	
+                        L = list(set(L) | set([(y,0)]))	
     return R
 
     
