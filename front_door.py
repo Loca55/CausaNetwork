@@ -63,14 +63,10 @@ def frontdoor(G, X, Z, Y, **Optional_Parameter):
     #There is no unblocked path from X to Z
     flag=True
     for z in Z:
-        #R = back_door.backdoor(G, X, [], z)
         if (PlotBackDoor or PlotAll):
             R = back_door.backdoor(G, X, [], z, Plot=True)
-            #plot.allPathPlot(G, X, Z)
         else:
              R = back_door.backdoor(G, X, [], z, Plot=False)
-            #plot.plotRGBColor(G, R, [])
-        #reachable = (z not in R)
         flag = flag and R
         
         
