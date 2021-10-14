@@ -1,5 +1,4 @@
 # CausalDataScience
-Progetto di stage UNIMIB
 
 This repo contain a three-year thesis work. We can find an implementation of algorithm for d-separation, back-door and front-door. do-calculus algorithm isn't complete.
 The aim of this work is provide who approaching to *causal networks*  with a tool that could help to figure out what are the nodes d-separeted, the back-door or front-door path between two nodes.
@@ -13,7 +12,6 @@ from classes.Graph import Graph as graph
 import dsep as dsep
 import back_door as bk
 import front_door
-import docalculus
 import plot
 
 #Define the node in the Graph
